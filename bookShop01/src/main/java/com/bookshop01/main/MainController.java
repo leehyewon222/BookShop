@@ -20,62 +20,62 @@ import com.bookshop01.goods.service.GoodsService;
 import com.bookshop01.goods.vo.GoodsVO;
 
 
-//@Controller("mainController"): 해당 클래스를 컨트롤러로 지정하며, 빈의 이름을 "mainController"로 설정한다.
-//@EnableAspectJAutoProxy: AOP를 사용하기 위한 어노테이션으로, 이를 설정하면 자동으로 AOP 프록시를 생성하여 적용한다.
+//@Controller("mainController"): �빐�떦 �겢�옒�뒪瑜� 而⑦듃濡ㅻ윭濡� 吏��젙�븯硫�, 鍮덉쓽 �씠由꾩쓣 "mainController"濡� �꽕�젙�븳�떎.
+//@EnableAspectJAutoProxy: AOP瑜� �궗�슜�븯湲� �쐞�븳 �뼱�끂�뀒�씠�뀡�쑝濡�, �씠瑜� �꽕�젙�븯硫� �옄�룞�쑝濡� AOP �봽濡앹떆瑜� �깮�꽦�븯�뿬 �쟻�슜�븳�떎.
 @Controller("mainController")
 @EnableAspectJAutoProxy
 public class MainController extends BaseController {
 	
-	//GoodsServiceImpl.java파일에 작성 해 놓은 
-	//public class GoodsServiceImpl implements GoodsService {} 의
-	//<bean>을 자동 주입 합니다.
+	//GoodsServiceImpl.java�뙆�씪�뿉 �옉�꽦 �빐 �넃�� 
+	//public class GoodsServiceImpl implements GoodsService {} �쓽
+	//<bean>�쓣 �옄�룞 二쇱엯 �빀�땲�떎.
 	@Autowired
 	private GoodsService goodsService;
 
 	
-
-	// http://localhost:8090/bookShop01/main/main.do 입력하여 메인화면 요청시
-	// 메인화면 중앙에 보여줄 베스트셀러, 신간, 스테디 셀러를 조회한후  Map에 저장하여  JSP로 전달합니다.
+	//수정 확인을 위한 주석
+	// http://localhost:8090/bookShop01/main/main.do �엯�젰�븯�뿬 硫붿씤�솕硫� �슂泥��떆
+	// 硫붿씤�솕硫� 以묒븰�뿉 蹂댁뿬以� 踰좎뒪�듃���윭, �떊媛�, �뒪�뀒�뵒 ���윭瑜� 議고쉶�븳�썑  Map�뿉 ���옣�븯�뿬  JSP濡� �쟾�떖�빀�땲�떎.
 	@RequestMapping(value= "/main/main.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
-		//세션영역에 side_menu속성값 user를 저장 해 놓으면
-		//첫 메인 화면 main.jsp의 왼쪾사이드메뉴 모습은 비로그인된 상태로 접속한 사이드 왼쪾메뉴를 나타내기 위해 쓰입니다.
-		//참고. 그밖에 세연영역에 저장되는 값 확인을 위해 common폴더에 만들어져 있는 side.jsp를 열어 확인 해보세요
+		//�꽭�뀡�쁺�뿭�뿉 side_menu�냽�꽦媛� user瑜� ���옣 �빐 �넃�쑝硫�
+		//泥� 硫붿씤 �솕硫� main.jsp�쓽 �쇊履얠궗�씠�뱶硫붾돱 紐⑥뒿�� 鍮꾨줈洹몄씤�맂 �긽�깭濡� �젒�냽�븳 �궗�씠�뱶 �쇊履얜찓�돱瑜� �굹���궡湲� �쐞�빐 �벐�엯�땲�떎.
+		//李멸퀬. 洹몃컰�뿉 �꽭�뿰�쁺�뿭�뿉 ���옣�릺�뒗 媛� �솗�씤�쓣 �쐞�빐 common�뤃�뜑�뿉 留뚮뱾�뼱�졇 �엳�뒗 side.jsp瑜� �뿴�뼱 �솗�씤 �빐蹂댁꽭�슂
 		HttpSession session;
 		session=request.getSession();
 		session.setAttribute("side_menu", "user");
 				
 		ModelAndView mav=new ModelAndView();
 		
-		//ViewNameIntercetor클래스의 preHandle메소드 내부에서 request에 바인딩한 뷰 주소 /main/main 을!!!!!!!
-		//request.getAttribute("viewName"); 으로 얻어 
-		//views폴더/main폴더/main.jsp메인 페이지로 조회된 베스트셀러 , 신간, 스테디셀러 도서 정보를 보내기 위해  ModelAndView객체에 저장 (바인딩)
+		//ViewNameIntercetor�겢�옒�뒪�쓽 preHandle硫붿냼�뱶 �궡遺��뿉�꽌 request�뿉 諛붿씤�뵫�븳 酉� 二쇱냼 /main/main �쓣!!!!!!!
+		//request.getAttribute("viewName"); �쑝濡� �뼸�뼱 
+		//views�뤃�뜑/main�뤃�뜑/main.jsp硫붿씤 �럹�씠吏�濡� 議고쉶�맂 踰좎뒪�듃���윭 , �떊媛�, �뒪�뀒�뵒���윭 �룄�꽌 �젙蹂대�� 蹂대궡湲� �쐞�빐  ModelAndView媛앹껜�뿉 ���옣 (諛붿씤�뵫)
 		String viewName=(String)request.getAttribute("viewName");
 		mav.setViewName(viewName);
 		
-		//베스트 셀러, 신간, 스테디 셀러  도서정보를 조회 해 Map에 저장받기 위해  서비스의 메소드 호출!
+		//踰좎뒪�듃 ���윭, �떊媛�, �뒪�뀒�뵒 ���윭  �룄�꽌�젙蹂대�� 議고쉶 �빐 Map�뿉 ���옣諛쏄린 �쐞�빐  �꽌鍮꾩뒪�쓽 硫붿냼�뱶 �샇異�!
 		Map<String,List<GoodsVO>> goodsMap=goodsService.listGoods();
-		mav.addObject("goodsMap", goodsMap); //ModelAndView에 main.jsp중앙화면에 보여줄 조회된 도서 정보가 저장된 Map을 저장 (바인딩)
+		mav.addObject("goodsMap", goodsMap); //ModelAndView�뿉 main.jsp以묒븰�솕硫댁뿉 蹂댁뿬以� 議고쉶�맂 �룄�꽌 �젙蹂닿� ���옣�맂 Map�쓣 ���옣 (諛붿씤�뵫)
 		
 		  System.out.println("-------------------------------------------------------------------");
 	      System.out.println("-------------------------------------------------------------------");
-	      System.out.println("흐름2.");
-	      System.out.println("MainController컨트롤러 클래스 내부의 main메소드 호출되었으며");
-	      System.out.println("main메소드 내부에서 ViewNameInterceptor클래스에서 request에 바인딩한 ");
-	      System.out.println("뷰 주소 " + viewName + " 을 request.getAttribute('viewName'); 으로 얻음");
-	      System.out.println("ModelAndView에 " + viewName + " 뷰 주소 저장 함.");
-	      System.out.println(" 세션 메모리 영역에 session.setAttribute('side_menu',user); 로 저장 함.");
-	      System.out.println(" 'side_menu'속성 값에 따라 화면 왼쪽에 표시되는 메뉴 항목을 다르게 하기 위해 저장 세션에 저장 하였음");
-	      System.out.println(" Map<String,List<GoodsVO>> goodsMap=goodsService.listGoods(); 이코드에 의해 베스드셀러 신간, 스테디셀러 정보를 조회해 Map에 저장 후 반환 받습니다.");
-	      System.out.println(" 마지막으로 ModelAndView에 추가로~ mav.addObject('goodsMap', goodsMap); 코드에 의해 조회된 Map을 저장시킵니다.");
-	      System.out.println(" return mav; 구문에 의해 ViewNameInterceptor클래스의 postHandle 메소드가 호출됩니다.");
+	      System.out.println("�쓲由�2.");
+	      System.out.println("MainController而⑦듃濡ㅻ윭 �겢�옒�뒪 �궡遺��쓽 main硫붿냼�뱶 �샇異쒕릺�뿀�쑝硫�");
+	      System.out.println("main硫붿냼�뱶 �궡遺��뿉�꽌 ViewNameInterceptor�겢�옒�뒪�뿉�꽌 request�뿉 諛붿씤�뵫�븳 ");
+	      System.out.println("酉� 二쇱냼 " + viewName + " �쓣 request.getAttribute('viewName'); �쑝濡� �뼸�쓬");
+	      System.out.println("ModelAndView�뿉 " + viewName + " 酉� 二쇱냼 ���옣 �븿.");
+	      System.out.println(" �꽭�뀡 硫붾え由� �쁺�뿭�뿉 session.setAttribute('side_menu',user); 濡� ���옣 �븿.");
+	      System.out.println(" 'side_menu'�냽�꽦 媛믪뿉 �뵲�씪 �솕硫� �쇊履쎌뿉 �몴�떆�릺�뒗 硫붾돱 �빆紐⑹쓣 �떎瑜닿쾶 �븯湲� �쐞�빐 ���옣 �꽭�뀡�뿉 ���옣 �븯���쓬");
+	      System.out.println(" Map<String,List<GoodsVO>> goodsMap=goodsService.listGoods(); �씠肄붾뱶�뿉 �쓽�빐 踰좎뒪�뱶���윭 �떊媛�, �뒪�뀒�뵒���윭 �젙蹂대�� 議고쉶�빐 Map�뿉 ���옣 �썑 諛섑솚 諛쏆뒿�땲�떎.");
+	      System.out.println(" 留덉�留됱쑝濡� ModelAndView�뿉 異붽�濡�~ mav.addObject('goodsMap', goodsMap); 肄붾뱶�뿉 �쓽�빐 議고쉶�맂 Map�쓣 ���옣�떆�궢�땲�떎.");
+	      System.out.println(" return mav; 援щЦ�뿉 �쓽�빐 ViewNameInterceptor�겢�옒�뒪�쓽 postHandle 硫붿냼�뱶媛� �샇異쒕맗�땲�떎.");
 	      
 	      
 	      System.out.println("-------------------------------------------------------------------");
 	      System.out.println("-------------------------------------------------------------------");
 	      
-	      System.out.println("흐름3. 그 후 tiles_main.xml 파일에 작성한 <definition name=/main/main ...> 태그의 name속성값 /main/main이 ModelAndView에 저장 했던 /main/main과 일치하면 해당 뷰템플릿을 메인화면으로 보여줍니다.");
+	      System.out.println("�쓲由�3. 洹� �썑 tiles_main.xml �뙆�씪�뿉 �옉�꽦�븳 <definition name=/main/main ...> �깭洹몄쓽 name�냽�꽦媛� /main/main�씠 ModelAndView�뿉 ���옣 �뻽�뜕 /main/main怨� �씪移섑븯硫� �빐�떦 酉고뀥�뵆由우쓣 硫붿씤�솕硫댁쑝濡� 蹂댁뿬以띾땲�떎.");
 	
 		
 		return mav;
