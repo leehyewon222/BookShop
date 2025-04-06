@@ -1,0 +1,6 @@
+.metadata/
+*.snap
+*.log
+*.prefs
+*.xml
+.settings/
